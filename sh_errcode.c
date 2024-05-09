@@ -15,6 +15,7 @@ inline const char *errcode_str(uint8_t err) {
       [ERR_CODE_PANIC] = {"panic"},
       [ERR_CODE_CHAN_CLOSED] = {"write to closed channel"},
       [ERR_CODE_CHAN_OK] = {"channel ok"},
+      [ERR_CODE_FD_NOT_FOUND] = {"file or directory not found"},
   };
   return err_msg_lut[err].msg;
 }

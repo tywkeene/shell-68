@@ -7,7 +7,7 @@
 
 #define check_null_args(reqc, argc, argv)                                      \
   if (argc < reqc || argv == NULL)                                             \
-    return SHELL_STATUS_ARGS_REQ;
+    return ERR_CODE_ARGS_REQ;
 
 int execute_builtin(char *in);
 

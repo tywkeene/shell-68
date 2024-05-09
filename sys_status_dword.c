@@ -11,7 +11,7 @@ status_dword_t sys_status;
 
 static const uint32_t sys_status_masks[] = {
     SYS_K_API_MASK,   SYS_K_PMM_MASK,   SYS_K_INTERRUPTS_MASK, SYS_K_TASK_MASK,
-    SYS_SH_TERM_MASK, SYS_SH_HEAP_MASK, SYS_SH_LED_MASK,
+    SYS_SH_TERM_MASK, SYS_SH_HEAP_MASK, SYS_SH_LED_MASK,       SYS_SH_DISK_MASK,
 };
 
 void sys_init_status(void) { sh_set_atomic_uint32(&sys_status, 0); }
@@ -39,7 +39,7 @@ void sys_print_status_dword(void) {
       [SYS_K_API_MASK] = {"K_API"},        [SYS_K_PMM_MASK] = {"K_PMM"},
       [SYS_K_INTERRUPTS_MASK] = {"K_INT"}, [SYS_K_TASK_MASK] = {"SH_TASK"},
       [SYS_SH_TERM_MASK] = {"SH_TERM"},    [SYS_SH_HEAP_MASK] = {"SH_HEAP"},
-      [SYS_SH_LED_MASK] = {"SH_LED_CTRL"},
+      [SYS_SH_LED_MASK] = {"SH_LED_CTRL"}, [SYS_SH_DISK_MASK] = {"SYS_DISK"},
   };
 
   char tmp[32];

@@ -12,6 +12,7 @@
 #include <sh/status_led.h>
 #include <shell.h>
 #include <sync/mutex.h>
+#include <sys/status_dword.h>
 #include <util/misc.h>
 #include <util/string.h>
 
@@ -33,8 +34,35 @@ enum {
   BUILTIN_HEX,
   BUILTIN_STATUS,
   BUILTIN_MUTEX,
-  NUM_CMD,
+  BUILTIN_LS,
+  BUILTIN_RUN,
+  NUM_BUILTINS,
 };
+
+static int builtin_fn_run(int argc, const char **argv) {
+  _arg_not_used(argc);
+  _arg_not_used(argv);
+  if (!sys_get_status(SYS_SH_DISK_MASK)) {
+    sh_errorln(DEBUG_CALL_INFO, "disk not initialized");
+    return ERR_CODE_ERROR;
+  }
+
+  const char *filename = "/starter_c.bin";
+  uint32_t size = sys_file_size(filename);
+  uint8_t *p = (uint8_t *)sh_calloc(size + 8, sizeof(uint8_t));
+  return sys_execute(filename, p);
+}
+
+static int builtin_fn_ls(int argc, const char **argv) {
+  _arg_not_used(argc);
+  _arg_not_used(argv);
+  if (!sys_get_status(SYS_SH_DISK_MASK)) {
+    sh_errorln(DEBUG_CALL_INFO, "disk not initialized");
+    return ERR_CODE_ERROR;
+  }
+  sys_list_dir("/");
+  return ERR_CODE_OK;
+}
 
 static int builtin_fn_mutex(int argc, const char **argv) {
   _arg_not_used(argc);
@@ -174,7 +202,7 @@ static const struct {
   const char *str;
   const char *help;
   builtin_fn_t fn;
-} builtin_lut[NUM_CMD] = {
+} builtin_lut[NUM_BUILTINS] = {
     [BUILTIN_HALT] = {"halt", "halt the machine", builtin_fn_halt},
     [BUILTIN_HELP] = {"help", "print help messages of all commands",
                       builtin_fn_help},
@@ -197,12 +225,14 @@ static const struct {
     [BUILTIN_STATUS] = {"status", "print the state of the system status dword",
                         builtin_fn_status},
     [BUILTIN_MUTEX] = {"mutex", "test mutex implementation", builtin_fn_mutex},
+    [BUILTIN_LS] = {"ls", "print current directory listing", builtin_fn_ls},
+    [BUILTIN_RUN] = {"run", "run a binary file", builtin_fn_run},
 };
 
 static int builtin_fn_help(int argc, const char **argv) {
   _arg_not_used(argc);
   _arg_not_used(argv);
-  for (int i = 0; i < NUM_CMD; i++) {
+  for (int i = 0; i < NUM_BUILTINS; i++) {
 #if defined(_SH_DEBUG_CMDLINE)
     sh_debugln(DEBUG_CALL_INFO, "[addr: 0x%p]->  %s : %s", builtin_lut[i].fn,
                builtin_lut[i].str, builtin_lut[i].help);
@@ -219,7 +249,7 @@ int execute_builtin(char *in) {
   int status = ERR_CODE_NOT_FOUND;
   char *builtin_str = strncpy_slice(in, 0, next_token_index(in, 0, ' '));
 
-  for (uint32_t i = 0; i < NUM_CMD; i++) {
+  for (uint32_t i = 0; i < NUM_BUILTINS; i++) {
 #if defined(_SH_DEBUG_CMDLINE)
     sh_debugln(DEBUG_CALL_INFO, "sh_strncmp('%s', '%s', %d)", builtin_str,
                builtin_lut[i].str, strlen(builtin_str));

@@ -15,6 +15,7 @@ enum errcode_t {
   ERR_CODE_PANIC = 6,       // Something is wrong, panic (message/halt)
   ERR_CODE_CHAN_CLOSED = 7, // read from or write to closed channel
   ERR_CODE_CHAN_OK = 8,     // read from or write to channel succeeded
+  ERR_CODE_FD_NOT_FOUND = 9,     // file or directory not found
   NUM_ERRCODE
 };
 

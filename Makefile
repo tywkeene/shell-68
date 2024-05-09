@@ -5,12 +5,12 @@ KERMIT=kermit
 ROSCO_M68K_DIR=./rosco_m68k
 ROSCO_LIB_INC=$(ROSCO_M68K_DIR)/code/software/libs/build/include
 ROSCO_KERN_INC=$(ROSCO_M68K_DIR)/code/firmware/rosco_m68k_firmware/kernel/include
-EXTRA_LIBS=-lmachine -ldebug_stub -lvterm -lheap
+EXTRA_LIBS=-lmachine -ldebug_stub -lvterm -lheap -lsdfat
 EXTRA_LDFLAGS=
 EXTRA_CFLAGS=-Wno-format-zero-length -Wno-format \
  			 -Wno-implicit-function-declaration \
  			 -Wunused-variable -Wno-pedantic -fbuiltin \
-			 -O0 -g -I$(ROSCO_KERN_INC) -I$(ROSCO_LIB_INC) \
+			 -O0 -g -I$(ROSCO_KERN_INC) \
              -I./include
 
 -include $(ROSCO_M68K_DIR)/code/software/software.mk

@@ -15,6 +15,7 @@ enum {
   SYS_SH_HEAP_MASK = (1u << 5),
   SYS_SH_LED_MASK = (1u << 6),
   SYS_SH_API_MASK = (1u << 7),
+  SYS_SH_DISK_MASK = (1u << 8),
   SYS_STATUS_MASK_MAX
 };
 

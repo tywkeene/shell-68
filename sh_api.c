@@ -7,6 +7,7 @@
 #include <sh/heap.h>
 #include <sh/print.h>
 #include <sh/status_led.h>
+#include <sys/disk.h>
 #include <sys/status_dword.h>
 #include <sys/task.h>
 
@@ -131,6 +132,7 @@ SH_API_PUBLIC void sh_initialize_api(term_type_t term) {
   init_message("k/pmm", init_pmm);
   init_message("sh/sys", init_sys);
   init_message("sh/heap", sh_init_heap);
+  init_message("sys/disk", sys_init_disk);
   sys_set_status(SYS_SH_API_MASK);
 
   sh.sys_enable_interrupts();
