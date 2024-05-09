@@ -1,0 +1,4 @@
+[submodule "rosco_m68k"]
+	path = rosco_m68k
+	url = https://github.com/rosco-m68k/rosco_m68k
+    tag = 2.42

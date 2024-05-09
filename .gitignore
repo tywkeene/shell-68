@@ -1,0 +1,11 @@
+compile_commands.json
+.ccls
+.ccls-cache
+./rosco_m68k/
+*.o
+*.bin
+*.elf
+*.dis
+*.map
+*.sym
+*.lst
